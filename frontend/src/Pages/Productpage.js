@@ -15,7 +15,7 @@ const Productpage = (props) => {
     }
 
     fetchProduct()
-  }, [])
+  }, [props.match])
 
 
   return (
