@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 
 
@@ -22,8 +22,8 @@ const Cartpage = ({ match, location, history }) => {
     }
   }, [dispatch, productId, qty])
 
-  const removeFromCart = (id) => {
-    console.log('remove')
+  const removeItem = (id) => {
+    dispatch(removeFromCart(id))
   }
 
   const checkout = () => {
@@ -61,7 +61,7 @@ const Cartpage = ({ match, location, history }) => {
                     </Col>
                     <Col md={2}>
                       <Button type='button' variant='danger' onClick={() =>
-                        removeFromCart(item.product)}>
+                        removeItem(item.product)}>
                         <i className="fas fa-trash"></i>
                       </Button>
                     </Col>
