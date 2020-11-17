@@ -6,7 +6,7 @@ import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import { listProductDetails } from '../actions/productActions'
 
-const Productpage = ({ match }) => {
+const Productpage = ({ history, match }) => {
   const [qty, setQty] = useState(0)
 
 
@@ -19,6 +19,11 @@ const Productpage = ({ match }) => {
   useEffect(() => {
     dispatch(listProductDetails(match.params.id))
   }, [dispatch, match])
+
+
+  const addToCart = () => {
+    history.push(`/cart/${match.params.id}?qty=${qty}`)
+  }
 
 
   return (
@@ -89,7 +94,7 @@ const Productpage = ({ match }) => {
                 )}
 
                 <ListGroup.Item>
-                  <Button className="btn-block" tpe="button" disabled={product.countInStock === 0}>
+                  <Button className="btn-block" onClick={addToCart()} type="button" disabled={product.countInStock === 0}>
                     Add to Cart
                 </Button>
                 </ListGroup.Item>
