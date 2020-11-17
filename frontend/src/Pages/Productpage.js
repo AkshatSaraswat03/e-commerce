@@ -1,12 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Col, Image, ListGroup, Card, Button } from 'react-bootstrap'
+import { Row, Col, Image, ListGroup, Card, Button, Form } from 'react-bootstrap'
 import Rating from '../components/Rating'
 import Loader from '../components/Loader'
 import { listProductDetails } from '../actions/productActions'
 
 const Productpage = ({ match }) => {
+  const [qty, setQty] = useState(0)
+
+
   const dispatch = useDispatch()
 
   const productDetails = useSelector(state => state.productDetails)
@@ -68,6 +71,22 @@ const Productpage = ({ match }) => {
                     </Col>
                   </Row>
                 </ListGroup.Item>
+
+                {product.countInStock > 0 && (
+                  <ListGroup.Item>
+                    <Row>
+                      <Col>Qty</Col>
+                      <Col>
+                        <Form.Control as='select' value={qty} onChange={(e) =>
+                          setQty(e.target.value)}>
+                          {[...Array(product.countInStock).keys()].map(a => (
+                            <option key={a + 1} value={a + 1}>{a + 1}</option>
+                          ))}
+                        </Form.Control>
+                      </Col>
+                    </Row>
+                  </ListGroup.Item>
+                )}
 
                 <ListGroup.Item>
                   <Button className="btn-block" tpe="button" disabled={product.countInStock === 0}>
