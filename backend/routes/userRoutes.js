@@ -29,7 +29,7 @@ router.post('/login', asyncHandler(async (req, res) => {
 }))
 
 
-// to get a logged in user. get a token
+// to get a logged in user.
 //private
 router.get('/profile', protect, asyncHandler(async (req, res) => {
   const user = await User.findById(req.user._id)
@@ -47,10 +47,44 @@ router.get('/profile', protect, asyncHandler(async (req, res) => {
     throw new Error('User not found !')
   }
 
-  //res.send('success')
 
 }))
 
+
+
+
+// to register a new user
+//public
+router.post('/', asyncHandler(async (req, res) => {
+  const { name, email, password } = req.body
+
+  const userExists = await User.findOne({ email })
+
+  if (userExists) {
+    res.status(400)
+    throw new Error('User exists')
+  }
+
+  const user = await User.create({
+    name,
+    email,
+    password
+  })
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      token: generateToken(user._id)
+    })
+  } else {
+    res.status(400)
+    throw new Error('User not found!!')
+  }
+
+}))
 
 
 module.exports = router
