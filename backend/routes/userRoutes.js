@@ -3,6 +3,7 @@ const asyncHandler = require('express-async-handler')
 const router = express.Router()
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs')
+const generateToken = require('../utils/generateToken')
 
 // to authenticate a user. validate email/password and get a token
 //public
@@ -17,7 +18,7 @@ router.post('/login', asyncHandler(async (req, res) => {
       name: user.name,
       email: user.email,
       isAdmin: user.isAdmin,
-      token: null
+      token: generateToken(user._id)
     })
   } else {
     res.status(401)
