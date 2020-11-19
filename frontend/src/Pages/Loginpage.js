@@ -6,20 +6,37 @@ import Loader from '../components/Loader'
 import FormContainer from '../components/FormContainer'
 import { login } from '../actions/userActions'
 
-const Loginpage = ({ location }) => {
+const Loginpage = ({ location, history }) => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+
+  const dispatch = useDispatch()
+
+  const userLogin = useSelector(state => state.userLogin)
+  const { loading, error, userInfo } = userLogin
+
   const redirect = location.search ? location.search.split('=') : '/'
+
+  useEffect(() => {
+    if (userInfo) {
+      history.push(redirect)
+    }
+  }, [history, userInfo, redirect])
 
   const submitHandler = (e) => {
     e.preventDefault()
+
     //dispatch login
+    dispatch(login(email, password))
+
   }
 
 
   return (
     <FormContainer>
       <h1>Sign In</h1>
+      {error && <h6 style={{ color: "red", textAlign: "center" }}>Invalid email or password</h6>}
+      {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="email">
           <Form.Label>Email Address</Form.Label>
@@ -27,7 +44,7 @@ const Loginpage = ({ location }) => {
             type="email"
             placeholder='Enter email ...'
             value={email}
-            onchange={e => setEmail(e.target.value)}
+            onChange={e => setEmail(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
@@ -37,7 +54,7 @@ const Loginpage = ({ location }) => {
             type="password"
             placeholder='Enter Password ...'
             value={password}
-            onchange={e => setPassword(e.target.value)}
+            onChange={e => setPassword(e.target.value)}
           ></Form.Control>
         </Form.Group>
 
