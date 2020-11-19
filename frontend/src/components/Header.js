@@ -47,8 +47,8 @@ const Header = () => {
 
           </Navbar.Collapse>
         </Container>
-      </Navbar >
-    </header >
+      </Navbar>
+    </header>
   )
 }
 

@@ -8,6 +8,7 @@ import Productpage from './Pages/Productpage'
 import Cartpage from './Pages/Cartpage'
 import Loginpage from './Pages/Loginpage'
 import Registerpage from './Pages/Registerpage'
+import Profilepage from './Pages/Profilepage'
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
           <Route exact path="/" component={Homepage} />
           <Route exact path="/login" component={Loginpage} />
           <Route exact path="/register" component={Registerpage} />
+          <Route exact path="/profile" component={Profilepage} />
           <Route path='/product/:id' component={Productpage} />
           <Route path='/cart/:id?' component={Cartpage} />
         </Container>

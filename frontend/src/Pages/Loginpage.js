@@ -49,7 +49,7 @@ const Loginpage = ({ location, history }) => {
         </Form.Group>
 
         <Form.Group controlId="password">
-          <Form.Label>password Address</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control
             type="password"
             placeholder='Enter Password ...'
