@@ -46,7 +46,7 @@ const Registerpage = ({ location, history }) => {
       {loading && <Loader />}
       <Form onSubmit={submitHandler}>
         <Form.Group controlId="name">
-          <Form.Label>Name Address</Form.Label>
+          <Form.Label>Name</Form.Label>
           <Form.Control
             type="name"
             placeholder='Enter name ...'

@@ -26,8 +26,14 @@ const Cartpage = ({ match, location, history }) => {
     dispatch(removeFromCart(id))
   }
 
-  const checkout = () => {
-    history.push('/login?redirect=shipping')
+  // const checkoutHandler = () => {
+  //   history.push('/login?redirect=shipping')
+  // }
+
+
+  const onCheckout = localStorage.userInfo ? '/shipping' : '/login'
+  const checkoutHandler = () => {
+    history.push(`${onCheckout}`)
   }
 
   return (
@@ -83,7 +89,7 @@ const Cartpage = ({ match, location, history }) => {
             </ListGroup.Item>
             <ListGroup.Item>
               <Button type='button' className='btn-block'
-                disabled={cartItems.length === 0} onClick={checkout}>
+                disabled={cartItems.length === 0} onClick={checkoutHandler}>
                 Proceed to Checkout
               </Button>
             </ListGroup.Item>
