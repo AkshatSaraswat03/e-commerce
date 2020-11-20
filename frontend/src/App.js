@@ -11,6 +11,7 @@ import Registerpage from './Pages/Registerpage'
 import Profilepage from './Pages/Profilepage'
 import Shippingpage from './Pages/Shippingpage'
 import Paymentpage from './Pages/Paymentpage'
+import Placeorderpage from './Pages/Placeorderpage'
 
 
 const App = () => {
@@ -24,6 +25,7 @@ const App = () => {
           <Route exact path="/profile" component={Profilepage} />
           <Route exact path="/shipping" component={Shippingpage} />
           <Route exact path="/payment" component={Paymentpage} />
+          <Route exact path="/placeorder" component={Placeorderpage} />
           <Route path='/product/:id' component={Productpage} />
           <Route path='/cart/:id?' component={Cartpage} />
           <Route exact path="/" component={Homepage} />
