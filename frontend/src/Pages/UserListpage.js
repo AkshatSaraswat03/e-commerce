@@ -55,7 +55,7 @@ const UserListpage = ({ history }) => {
                     <a href={`mailto:${user.email}`}>{user.email}</a>
                   </td>
                   <td>
-                    {user.isAdmin ? (<i className='fas da-check' style={{ color: 'green' }}></i>) : (
+                    {user.isAdmin ? (<i className='fas fa-check' style={{ color: 'green' }}></i>) : (
                       <i className='fas fa-times' style={{ color: 'red' }}></i>
                     )}
                   </td>
