@@ -4,7 +4,7 @@ const router = express.Router()
 const User = require('../models/userModel')
 const bcrypt = require('bcryptjs')
 const generateToken = require('../utils/generateToken')
-const { protect, isAdmin } = require('../middlewares/authMiddleware')
+const protect = require('../middlewares/authMiddleware')
 
 
 // to authenticate a user. validate email/password and get a token
@@ -121,14 +121,11 @@ router.post('/', asyncHandler(async (req, res) => {
 
 }))
 
-
-
-// get all users
-//private
-router.get('/', protect, isAdmin, asyncHandler(async (req, res) => {
+//get all users
+//ptivate
+router.get('/', protect, asyncHandler(async (req, res) => {
   const users = await User.find({})
   res.json(users)
-
 }))
 
 
