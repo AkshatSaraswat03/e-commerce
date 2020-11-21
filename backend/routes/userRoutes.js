@@ -139,11 +139,26 @@ router.post('/', asyncHandler(async (req, res) => {
 }))
 
 //get all users
-//ptivate
+//private
 router.get('/', protect, admin, asyncHandler(async (req, res) => {
   const users = await User.find({})
   res.json(users)
 }))
+
+
+//delete a user
+//private
+router.delete('/:id', protect, admin, asyncHandler(async (req, res) => {
+  const user = await User.findById(req.params.id)
+  if (user) {
+    await user.remove()
+    res.json({ message: 'user Removed' })
+  } else {
+    res.status(404)
+    throw new Error('User not found')
+  }
+}))
+
 
 
 module.exports = router
