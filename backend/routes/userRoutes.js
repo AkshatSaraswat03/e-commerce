@@ -7,6 +7,23 @@ const generateToken = require('../utils/generateToken')
 const protect = require('../middlewares/authMiddleware')
 
 
+
+
+//admin middleware 
+const admin = (req, res, next) => {
+
+  if (req.user && req.user.isAdmin) {
+
+    next()
+  } else {
+    res.status(401)
+    throw new Error('Not an admin')
+  }
+}
+
+
+
+
 // to authenticate a user. validate email/password and get a token
 //public
 router.post('/login', asyncHandler(async (req, res) => {
@@ -123,7 +140,7 @@ router.post('/', asyncHandler(async (req, res) => {
 
 //get all users
 //ptivate
-router.get('/', protect, asyncHandler(async (req, res) => {
+router.get('/', protect, admin, asyncHandler(async (req, res) => {
   const users = await User.find({})
   res.json(users)
 }))
