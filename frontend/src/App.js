@@ -15,6 +15,7 @@ import Placeorderpage from './Pages/Placeorderpage'
 import Orderpage from './Pages/Orderpage'
 import UserListpage from './Pages/UserListpage'
 import UserEditpage from './Pages/UserEditpage'
+import ProductListpage from './Pages/ProductListpage'
 
 
 const App = () => {
@@ -34,6 +35,7 @@ const App = () => {
           <Route path='/cart/:id?' component={Cartpage} />
           <Route path='/admin/userlist' component={UserListpage} />
           <Route path='/admin/user/:id/edit' component={UserEditpage} />
+          <Route path='/admin/productlist' component={ProductListpage} />
           <Route exact path="/" component={Homepage} />
         </Container>
       </main>
