@@ -5,6 +5,22 @@ const Order = require('../models/orderModel')
 const protect = require('../middlewares/authMiddleware')
 
 
+//admin middleware 
+const admin = (req, res, next) => {
+
+  if (req.user && req.user.isAdmin) {
+
+    next()
+  } else {
+    res.status(401)
+    throw new Error('Not an admin')
+  }
+}
+
+
+
+
+
 // to create new order
 //private
 router.post('/', protect, asyncHandler(async (req, res) => {
@@ -30,6 +46,17 @@ router.post('/', protect, asyncHandler(async (req, res) => {
     res.status(200).json(createdOrder)
   }
 }))
+
+
+// @desc    Get all orders
+// @route   GET /api/orders
+// @access  Private
+router.get('/', protect, admin, asyncHandler(async (req, res) => {
+  const orders = await Order.find({}).populate('user', 'id name')
+  res.json(orders)
+}))
+
+
 
 
 // @desc    Get logged in user orders
