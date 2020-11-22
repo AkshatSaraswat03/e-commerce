@@ -73,7 +73,7 @@ router.get('/myorders', protect, asyncHandler(async (req, res) => {
 // to get orders by id
 // private
 router.get('/:id', protect, asyncHandler(async (req, res) => {
-  const order = await (await Order.findById(req.params.id)).populate('user', 'name email')
+  const order = await Order.findById(req.params.id).populate('user', 'name email')
 
   if (order) {
     res.json(order)
@@ -88,7 +88,7 @@ router.get('/:id', protect, asyncHandler(async (req, res) => {
 // update order to paid
 // private
 router.put('/:id/pay', protect, asyncHandler(async (req, res) => {
-  const order = await (await Order.findById(req.params.id))
+  const order = await Order.findById(req.params.id)
 
   if (order) {
     order.isPaid = true
@@ -109,6 +109,26 @@ router.put('/:id/pay', protect, asyncHandler(async (req, res) => {
     throw new Error('Order not found')
   }
 
+}))
+
+// @desc    Update order to delivered
+// @route   GET /api/orders/:id/deliver
+// @access  Private/Admin
+router.put('/:id/deliver', protect, admin, asyncHandler(async (req, res) => {
+  const order = await Order.findById(req.params.id)
+
+  if (order) {
+    order.isdelivered = true
+    order.deliveredAt = Date.now()
+
+    const updatedOrder = await order.save()
+
+    res.json(updatedOrder)
+    console.log(updatedOrder)
+  } else {
+    res.status(404)
+    throw new Error('Order not found')
+  }
 }))
 
 
