@@ -3,7 +3,7 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
-import { listProducts } from '../actions/productActions'
+import { listProducts, deleteProduct } from '../actions/productActions'
 
 const ProductListpage = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -11,8 +11,13 @@ const ProductListpage = ({ history, match }) => {
   const productList = useSelector(state => state.productList)
   const { loading, error, products } = productList
 
+  const productDelete = useSelector(state => state.productDelete)
+  const { loading: loadingDelete, error: errorDelete, success: successDelete } = productDelete
+
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
+
+
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -20,12 +25,14 @@ const ProductListpage = ({ history, match }) => {
     } else {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo])
+  }, [dispatch, history, userInfo, successDelete])
+
+
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure ?')) {
-
       //delete products
+      dispatch(deleteProduct(id))
     }
   }
 
@@ -46,6 +53,8 @@ const ProductListpage = ({ history, match }) => {
         </Col>
       </Row>
 
+      {loadingDelete && <Loader />}
+      {errorDelete && <h6 style={{ color: 'red' }}>{errorDelete}</h6>}
       {loading ? <Loader /> : error ? <h6 style={{ color: 'red' }}>{error}</h6> :
         (
           <Table striped bordered hover responsive className='table-sm'>
