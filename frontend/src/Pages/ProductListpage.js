@@ -3,7 +3,8 @@ import { LinkContainer } from 'react-router-bootstrap'
 import { Table, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
-import { listProducts, deleteProduct } from '../actions/productActions'
+import { listProducts, deleteProduct, createProduct } from '../actions/productActions'
+import { PRODUCT_CREATE_RESET } from '../constants/productConstants'
 
 const ProductListpage = ({ history, match }) => {
   const dispatch = useDispatch()
@@ -17,15 +18,25 @@ const ProductListpage = ({ history, match }) => {
   const userLogin = useSelector(state => state.userLogin)
   const { userInfo } = userLogin
 
+  const productCreate = useSelector(state => state.productCreate)
+  const { loading: loadingCreate, error: errorCreate, success: successCreate, product: createdProduct } = productCreate
 
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listProducts())
-    } else {
+
+    dispatch({ type: PRODUCT_CREATE_RESET })
+
+    if (!userInfo.isAdmin) {
       history.push('/login')
     }
-  }, [dispatch, history, userInfo, successDelete])
+
+    if (successCreate) {
+      history.push(`/admin/product/${createdProduct._id}/edit`)
+    } else {
+      dispatch(listProducts())
+    }
+
+  }, [dispatch, history, userInfo, successDelete, successCreate, createdProduct])
 
 
 
@@ -36,8 +47,9 @@ const ProductListpage = ({ history, match }) => {
     }
   }
 
-  const createProductHandler = (product) => {
+  const createProductHandler = () => {
     //create product
+    dispatch(createProduct())
   }
 
   return (
@@ -55,6 +67,10 @@ const ProductListpage = ({ history, match }) => {
 
       {loadingDelete && <Loader />}
       {errorDelete && <h6 style={{ color: 'red' }}>{errorDelete}</h6>}
+
+      {loadingCreate && <Loader />}
+      {errorCreate && <h6 style={{ color: 'red' }}>{errorCreate}</h6>}
+
       {loading ? <Loader /> : error ? <h6 style={{ color: 'red' }}>{error}</h6> :
         (
           <Table striped bordered hover responsive className='table-sm'>

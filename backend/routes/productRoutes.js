@@ -71,7 +71,7 @@ router.post('/', protect, admin, asyncHandler(async (req, res) => {
   })
 
   const createdProduct = await product.save()
-  res.json(201).json(createdProduct)
+  res.status(201).json(createdProduct)
 
 }))
 
