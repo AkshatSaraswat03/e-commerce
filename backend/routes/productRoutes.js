@@ -41,6 +41,21 @@ router.get('/', asyncHandler(async (req, res) => {
 }))
 
 
+
+
+//Get top rated products
+//public
+router.get('/top', asyncHandler(async (req, res) => {
+
+  const products = await Product.find({}).sort({ rating: -1 }).limit(4)
+  res.json(products)
+
+}))
+
+
+
+
+
 //gets the product you need
 //public
 router.get('/:id', asyncHandler(async (req, res) => {

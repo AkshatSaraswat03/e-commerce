@@ -142,7 +142,7 @@ const Productpage = ({ history, match }) => {
                 ))}
                 <ListGroup.Item>
                   <h4>Write a Customer Review</h4>
-                  {errorProductReview && <h6 style={{ color: 'red' }}>{errorProductReview}</h6>}
+                  {errorProductReview && <h6 style={{ color: 'red' }}>Product Already Reviewed !</h6>}
                   {userInfo ? (
                     <Form onSubmit={submitHandler} >
                       <Form.Group controlId='rating'>
